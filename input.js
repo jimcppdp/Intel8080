@@ -39,7 +39,7 @@ var io;
             };
         }
         Input.prototype.init = function () {
-            this.IN_PORT2 |= (0x1 | 0x2);
+            this.IN_PORT2 |= 0; //(0x1 | 0x2);
             this.IN_PORT2 |= (0x80);
         };
         Input.prototype.update = function () {
