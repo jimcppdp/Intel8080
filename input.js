@@ -1,6 +1,10 @@
+// Class for emulation of the Space Invaders arcade input system
+//
+// This file is a port from ActionScript - http://www.bytearray.org/?p=622
+// Original class (BlitzMax) - http://rveilleux.googlepages.com/blitzmaxarcadeemulatortutorial
 var io;
 (function (io) {
-    var Input = (function () {
+    var Input = /** @class */ (function () {
         function Input(document, window, cpu) {
             this.OUT_PORT2 = 0;
             this.OUT_PORT3 = 0;
@@ -25,10 +29,11 @@ var io;
             var ref = this;
             this.document.onkeydown = function (e) {
                 ref.mapper[e.keyCode] = true;
-                if(ref.mapper[ref.P]) {
-                    if(!ref.paused) {
+                if (ref.mapper[ref.P]) {
+                    if (!ref.paused) {
                         clearInterval(ref.id);
-                    } else {
+                    }
+                    else {
                         ref.id = setInterval(ref.window.run, 16);
                     }
                     ref.paused = !ref.paused;
@@ -45,33 +50,30 @@ var io;
         Input.prototype.update = function () {
             this.IN_PORT1 = this.IN_PORT1 & (~(0x1 | 0x2 | 0x4 | 0x10 | 0x20 | 0x40));
             this.IN_PORT2 = this.IN_PORT2 & (~(0x4 | 0x10 | 0x20 | 0x40));
-            if(this.mapper[this.COIN]) {
+            if (this.mapper[this.COIN])
                 this.IN_PORT1 |= 0x1;
-            }
-            if(this.mapper[this.MULTIPLAYER]) {
+            if (this.mapper[this.MULTIPLAYER])
                 this.IN_PORT1 |= 0x2;
-            }
-            if(this.mapper[this.SINGLE]) {
+            if (this.mapper[this.SINGLE])
                 this.IN_PORT1 |= 0x4;
-            }
-            if(this.mapper[this.LEFT]) {
+            if (this.mapper[this.LEFT]) {
                 this.IN_PORT1 |= 0x20;
                 this.IN_PORT2 |= 0x20;
             }
-            if(this.mapper[this.RIGHT]) {
+            if (this.mapper[this.RIGHT]) {
                 this.IN_PORT1 |= 0x40;
                 this.IN_PORT2 |= 0x40;
             }
-            if(this.mapper[this.SPACE]) {
+            if (this.mapper[this.SPACE]) {
                 this.IN_PORT1 |= 0x10;
                 this.IN_PORT2 |= 0x10;
             }
-            if(this.mapper[this.RESET]) {
+            if (this.mapper[this.RESET]) {
                 this.cpu.Reset();
             }
         };
         Input.prototype.OutPutPort = function (port, value) {
-            switch(port) {
+            switch (port) {
                 case 2:
                     this.OUT_PORT2 = value;
                     break;
@@ -89,7 +91,7 @@ var io;
         };
         Input.prototype.InputPort = function (port) {
             var result = 0;
-            switch(port) {
+            switch (port) {
                 case 1:
                     result = this.IN_PORT1;
                     break;
@@ -106,11 +108,10 @@ var io;
             set: function (intervalID) {
                 this.id = intervalID;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         return Input;
-    })();
-    io.Input = Input;    
+    }());
+    io.Input = Input;
 })(io || (io = {}));
-//@ sourceMappingURL=input.js.map

@@ -63,7 +63,7 @@ module io
 
     init()
     {
-        this.IN_PORT2 |= (0x1 | 0x2);
+        this.IN_PORT2 |= 0; //(0x1 | 0x2);
         this.IN_PORT2 |= (0x80);
     }
 
